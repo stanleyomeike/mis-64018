@@ -1,2 +1,2 @@
 # Quantitative Management and Modeling
-Assignments for Quantitative Management and Modelingn (MIS-64018)
+Assignments for Quantitative Management and Modeling (MIS-64018)
