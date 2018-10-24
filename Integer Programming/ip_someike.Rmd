@@ -1,0 +1,106 @@
+---
+title: "ip programming"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r}
+library("lpSolveAPI")
+library("data.tree")
+```
+
+```{r}
+base_ip <- read.lp("ip_someike.lp")
+base_ip
+solve(base_ip)
+get.objective(base_ip)
+get.variables(base_ip)
+```
+
+
+```{r}
+base <- Node$new("Z = 41.25 [X1 = 3.75, X2 = 2.25]")
+```
+
+```{r}
+base_ip_left_1 <- read.lp("ip_someike_left_1.lp")
+base_ip_left_1
+solve(base_ip_left_1)
+get.objective(base_ip_left_1)
+get.variables(base_ip_left_1)
+```
+
+```{r}
+left_1 <- base$AddChild("Branching on X1 <= 3 --> Z = 39 [X1 = 3, X2 = 3]")
+```
+
+```{r}
+base_ip_right_1 <- read.lp("ip_someike_right_1.lp")
+base_ip_right_1
+solve(base_ip_right_1)
+get.objective(base_ip_right_1)
+get.variables(base_ip_right_1)
+```
+
+```{r}
+right_1 <- base$AddChild(">>Branching on X1 >= 4 --> Z = 41 [X1 = 4, X2 = 1.80]")
+```
+
+```{r}
+base_ip_right_1_left_2 <- read.lp("ip_someike_right_1_left_2.lp")
+base_ip_right_1_left_2
+solve(base_ip_right_1_left_2)
+get.objective(base_ip_right_1_left_2)
+get.variables(base_ip_right_1_left_2)
+```
+
+```{r}
+left_2 <- right_1$AddChild(">>Branching on X2 <= 1 --> Z = 40.56 [X1 = 4.44, X2 = 1.00]")
+```
+
+```{r}
+right_1_left_2_left_3 <- read.lp("ip_someike_right_1_left_2_left_3.lp")
+right_1_left_2_left_3
+solve(right_1_left_2_left_3)
+get.objective(right_1_left_2_left_3)
+get.variables(right_1_left_2_left_3)
+```
+
+```{r}
+left_3 <- left_2$AddChild("Branching on X1 <= 4 --> Z = 37 [X1 = 4.00, X2 = 1.00]")
+```
+
+```{r}
+base_ip_right_1_left_2_right_3 <- read.lp("ip_someike_right_1_left_2_right_3.lp")
+base_ip_right_1_left_2_right_3
+solve(base_ip_right_1_left_2_right_3)
+get.objective(base_ip_right_1_left_2_right_3)
+get.variables(base_ip_right_1_left_2_right_3)
+```
+
+```{r}
+right_3 <- left_2$AddChild(">>Branching on X1 >= 5 --> Z = 40 [X1 = 5.00, X2 = 1.00]")
+```
+
+```{r}
+base_ip_right_1_right_2 <- read.lp("ip_someike_right_1_right_2.lp")
+base_ip_right_1_right_2
+solve(base_ip_right_1_right_2)
+get.objective(base_ip_right_1_right_2)
+get.variables(base_ip_right_1_right_2)
+```
+
+```{r}
+right_2 <- right_1$AddChild("Branching on X2 >= 2 --> Infeasible")
+```
+
+
+```{r}
+print(base)
+```
+
+
+The final solution is: Z = 40 [X1 = 5.00, X2 = 1.00]
+
